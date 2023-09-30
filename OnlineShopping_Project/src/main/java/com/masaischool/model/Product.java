@@ -44,7 +44,7 @@ public class Product {
 	@NotBlank
 	private Integer quantity;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
 	private Cart cart;

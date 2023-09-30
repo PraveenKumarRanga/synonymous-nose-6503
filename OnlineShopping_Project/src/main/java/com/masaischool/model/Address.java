@@ -31,7 +31,7 @@ public class Address {
 	private Integer addressId;
 	
 	@Column(nullable = false)
-	private String streedNum;
+	private String streetNum;
 	
 	private String buildingNum;
 	
@@ -52,13 +52,14 @@ public class Address {
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "address",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Orders> order;
 
-	public Address(String streedNum, String buildingNum, String city, String state, String country, String pincode,
+	public Address(String streetNum, String buildingNum, String city, String state, String country, String pincode,
 			List<Orders> order) {
 		super();
-		this.streedNum = streedNum;
+		this.streetNum = streetNum;
 		this.buildingNum = buildingNum;
 		this.city = city;
 		this.state = state;

@@ -1,5 +1,6 @@
 package com.masaischool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -34,7 +35,8 @@ public class User {
 	
 	@Column(nullable = false)
 	private String role;
-
+	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;

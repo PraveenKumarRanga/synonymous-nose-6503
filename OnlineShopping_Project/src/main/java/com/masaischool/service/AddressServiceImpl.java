@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.masaischool.exception.NotFoundException;
 import com.masaischool.model.Address;
+import com.masaischool.model.Customer;
 import com.masaischool.repository.AddressRepo;
-
+import com.masaischool.repository.CustomerRepo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,22 +19,31 @@ public class AddressServiceImpl implements AddressService{
 
 	private AddressRepo addressRepo;
 	
-//	private CustomerRepo customerRepo;
+	private CustomerRepo customerRepo;
 	
 	
 	
-	public AddressServiceImpl(AddressRepo addressRepo) {
+	public AddressServiceImpl(AddressRepo addressRepo, CustomerRepo customerRepo) {
 		super();
 		this.addressRepo = addressRepo;
-//		this.customerRepo = customerRepo;
+		this.customerRepo = customerRepo;
 	}
 
 	@Override
-	public Address addAddress(Address address) {
+	public Address addAddress(Integer customerId, Address address) {
 		
-		log.info("address saved successfully");
+		Optional<Customer> exist = customerRepo.findById(customerId);
 		
-		return addressRepo.save(address);
+		if(exist.isPresent()) {
+			
+			log.info("address saved successfully");
+			
+			return addressRepo.save( address);
+			
+		}
+		
+		throw new NotFoundException("customer not found to add the address");
+
 	}
 
 	@Override
@@ -50,11 +60,9 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
-	public Address getAddressByCustomerId(Integer customerId) {
-		
-
-		
-		Optional<Address> address = addressRepo.findByCustomerId(customerId); 
+	public Address getAddressById(Integer addressId) {
+	
+		Optional<Address> address = addressRepo.findById(addressId); 
 		
 		if(address.isPresent()) {
 			log.info("address is available for the given customer id");
@@ -73,16 +81,14 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	@Override
-	public Address deleteAddressByCustomerId(Integer customerId) {
+	public Address deleteAddressById(Integer addressId) {
 		
 		
-		Optional<Address> address = addressRepo.findByCustomerId(customerId); 
-		
-		
-		
+		Optional<Address> address = addressRepo.findById(addressId); 
+
 		if(address.isPresent()) {
 			
-			addressRepo.deleteByCustomerId(customerId);
+			addressRepo.deleteById(addressId);
 			log.info("address is deleted");
 			return address.get();	
 		}
@@ -90,4 +96,12 @@ public class AddressServiceImpl implements AddressService{
 		throw new NotFoundException("address not found");
 	}
 
+
+
 }
+
+
+
+
+
+

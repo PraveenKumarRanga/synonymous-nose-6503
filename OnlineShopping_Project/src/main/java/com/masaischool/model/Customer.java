@@ -2,6 +2,8 @@ package com.masaischool.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,9 +11,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Pattern;
@@ -39,14 +38,15 @@ public class Customer {
 	private String lastName;
 	
 	@Column(unique = true ,nullable = false)
-	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9]//.+[a-z]{2,3}", flags = Flag.CASE_INSENSITIVE,
-				message = "invalid email format")
+	@Pattern(regexp = "[a-z0-9.]+@[a-z0-9]+\\.[a-z]{2,3}", flags = Flag.CASE_INSENSITIVE, 
+	message = "invalid pattern")
 	private String email;
 	
 	@Column(unique = true, nullable = false)
 	@Pattern(regexp = "[0-9]+", message = "mobile number accepts only digits")
 	@Size(max = 10)
 	private String mobileNum;
+	
 	
 	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Address> address;
@@ -57,12 +57,14 @@ public class Customer {
 	@OneToOne(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Cart cart;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Orders> order;
 
 	public Customer(String firstName, String lastName, String email, String mobileNum,
 			List<Address> address, User user, Cart cart, List<Orders> order) {
 		super();
+		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -72,6 +74,7 @@ public class Customer {
 		this.cart = cart;
 		this.order = order;
 	}
+	
 	
 	
 	
