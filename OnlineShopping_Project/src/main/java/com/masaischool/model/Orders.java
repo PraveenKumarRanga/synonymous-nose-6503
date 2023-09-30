@@ -36,7 +36,7 @@ public class Orders {
 	@NotBlank
 	private OrderStatus status;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
@@ -44,7 +44,7 @@ public class Orders {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Product> productList;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address address;

@@ -2,6 +2,8 @@ package com.masaischool.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,10 +28,12 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cartId;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "cart",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Product> product;
 
