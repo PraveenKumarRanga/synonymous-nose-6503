@@ -32,7 +32,7 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/customers")
-	public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
+	public ResponseEntity<Customer> addCustomer(@Valid @RequestBody Customer customer){
 		
 // setting address list
 		List<Address> addressList = customer.getAddress();

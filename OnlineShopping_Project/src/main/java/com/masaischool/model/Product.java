@@ -1,5 +1,7 @@
 package com.masaischool.model;
 
+import java.util.Optional;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -27,7 +29,7 @@ public class Product {
 	@Column(nullable = false)
 	private String productName;
 	
-	@NotBlank
+	@Column(nullable = false)
 	private Double price;
 	
 	@Column(nullable = false)
@@ -35,16 +37,16 @@ public class Product {
 	
 	private String dimension;
 	
-	@NotBlank
+	@Column(nullable = false)
 	private String specification;
 	
-	@NotBlank
+	@Column(nullable = false)
 	private String manufacturer;
 	
-	@NotBlank
+
 	private Integer quantity;
 	
-	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
@@ -56,11 +58,11 @@ public class Product {
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = "category_name")
 	private Category category;
 
-	public Product(String productName, @NotBlank Double price, String color, String dimension,
-			@NotBlank String specification, @NotBlank String manufacturer, @NotBlank Integer quantity) {
+	public Product(String productName, Double price, String color, String dimension,
+			 String specification, String manufacturer, Integer quantity) {
 		super();
 		this.productName = productName;
 		this.price = price;
