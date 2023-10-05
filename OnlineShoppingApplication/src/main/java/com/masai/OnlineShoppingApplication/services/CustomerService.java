@@ -1,0 +1,27 @@
+package com.masai.OnlineShoppingApplication.services;
+
+import java.util.List;
+
+import com.masai.OnlineShoppingApplication.model.Customer;
+;
+
+public interface CustomerService {
+	
+	public Customer addCustomer(Customer customer);
+	
+
+    public Customer updateCustomer(Integer id, Customer customer);
+
+ 
+    public Customer removeCustomer(Integer customerId);
+
+
+    public Customer viewCustomerById(Integer customerId);
+
+   
+    public List<Customer> viewAllCustomers();
+    
+    public Customer addAdmin(Customer admin);
+    
+    public Customer getCustomerDetailsByEmail(String email);
+}
